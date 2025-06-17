@@ -191,6 +191,7 @@ SELECT
 	rsd.id AS reserve_status,
 	sd.id AS auction_state, 
 	cd.id AS auction_city,
+	std.id AS seller_type,
 	s.view_count,
 	s.watcher_count,
 	s.bid_count,
@@ -205,7 +206,6 @@ SELECT
 	s.auction_title,
 	s.auction_subtitle,
 	s.auction_url
-
 FROM staging s
 LEFT JOIN vehicle_dim vd 
 	ON TRIM(s.vin)=vd.vin AND s.auction_id=vd.auction_id
@@ -217,5 +217,7 @@ LEFT JOIN state_dim sd
 	ON TRIM(UPPER(s.title_state))=sd.state_abbr
 LEFT JOIN city_dim CD
 	ON TRIM(s.city)=cd.city_name AND sd.id=cd.state_id
+LEFT JOIN seller_type_dim std
+	ON TRIM(LOWER(s.seller_type))=std.seller_type
 WHERE s.auction_id IS NOT NULL
 ON CONFLICT(auction_id) DO NOTHING; 

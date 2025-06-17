@@ -62,7 +62,7 @@ INSERT INTO state_dim (state, state_abbr, country_code) VALUES
 ('Washington', 'WA', 'US'),
 ('West Virginia', 'WV', 'US'),
 ('Wisconsin', 'WI', 'US'),
-('Wyoming', 'WY', 'US');
+('Wyoming', 'WY', 'US'),
 -- Canada
 ('Alberta', 'AB', 'CA'),
 ('British Columbia', 'BC', 'CA'),

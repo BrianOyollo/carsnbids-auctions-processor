@@ -190,6 +190,7 @@ CREATE TABLE auction_fact (
     reserve_status INT REFERENCES reserve_status_dim(id),
     auction_state INT REFERENCES state_dim(id),
     auction_city INT REFERENCES city_dim(id),
+    seller_type INT REFERENCES seller_type_dim(id),
 	view_count INT,
     watcher_count INT,
     bid_count INT,
