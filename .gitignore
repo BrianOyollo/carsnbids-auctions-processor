@@ -1,0 +1,24 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+raw_auctions
+processed_auctions
+
+
+.env
+/notes.notes
+/src/download_objects.py
+/src/notebooks/*.json
+/src/notebooks/*.txt
+/src/notebooks/*.csv
+/src/etl_scripts/
+/src/sql_scripts/
+/airflow/dags/etl_dag_local.py
+.ipynb_checkpoints
