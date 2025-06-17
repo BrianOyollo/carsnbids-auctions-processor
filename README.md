@@ -58,6 +58,42 @@ This project uses the following tools to orchestrate, transform, and load auctio
 
 4. Once processed, the cleaned auction data is **loaded into a PostgreSQL data warehouse**, making it available for querying, reporting, and dashboarding.
 
+## Project Structure
+
+```bash
+.
+├── airflow/
+│   ├── dags/
+│   │   ├── etl_scripts/
+│   │   │   ├── extract.py               # Extracts auction data from S3
+│   │   │   ├── transform.py             # Cleans and standardizes raw auction data
+│   │   │   └── load.py                  # Loads cleaned data into the PostgreSQL data warehouse
+│   │   ├── scraper/
+│   │   │   ├── scrape_auction_urls.py   # Scrapes auction listing URLs from carsandbids.com
+│   │   │   ├── scrape_auction.py        # Scrapes detailed auction data for each URL
+│   │   │   ├── save_auctions.py         # Uploads scraped data to S3
+│   │   │   └── setup.py                 # WebDriver setup for scraping
+│   │   ├── sql_scripts/
+│   │   │   ├── create_tables.sql        # Creates all fact and dimension tables
+│   │   │   ├── empty_staging.sql        # Empties the staging table before every load
+│   │   │   ├── load_auction_states.sql  # Loads US and Canadian states into state_dim
+│   │   │   └── load_tables.sql          # Loads transformed data from staging into fact & dim tables
+│   │   └── etl_dag.py                   # Main Airflow DAG that orchestrates the ETL pipeline
+│
+├── src/
+│   ├── notebooks/
+│   │   ├── transform.ipynb              # Develop and test transformation logic
+│   │   └── load.ipynb                   # Develop and test data loading logic
+│   ├── airflow_connections.py          # Sets up Airflow and PostgreSQL connections
+│   ├── start_airflow.sh                # Starts Airflow services (with tmux)
+│   └── stop_airflow.sh                 # Stops Airflow services
+│
+├── main.py                             # uv file (ignore)
+├── .python-version                     # Python version managed by uv
+├── uv.lock                             # uv dependency lock file
+
+```
+
 
 
 ## Installation
