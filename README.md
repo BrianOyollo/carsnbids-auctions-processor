@@ -6,7 +6,7 @@
 
 - A **PostgreSQL data warehouse** for querying, analytics, and dashboarding
 
-This component builds upon the [`carsnbids_scraper`](https://github.com/your-org/carsnbids_scraper) project, which collects raw auction data and stores it in Amazon S3.
+This component builds upon the [`carsnbids_scraper`](https://github.com/BrianOyollo/carsnbids-scraper) project, which collects raw auction data and stores it in Amazon S3.
 
 
 
@@ -41,7 +41,7 @@ This project uses the following tools to orchestrate, transform, and load auctio
 
 ## How It Works
 
-1. **Airflow `S3Sensor`** monitors a specific **S3 prefix** for new raw auction files uploaded by the [scraper module](https://github.com/your-org/carsnbids_scraper).
+1. **Airflow `S3Sensor`** monitors a specific **S3 prefix** for new raw auction files uploaded by the [scraper module](https://github.com/BrianOyollo/carsnbids-scraper).
 
 2. When a new file is detected, a DAG kicks off the transformation process:
    
