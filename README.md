@@ -30,10 +30,7 @@ This project uses the following tools to orchestrate, transform, and load auctio
 | ------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | **[Apache Airflow](https://airflow.apache.org/)** | Orchestrates the ETL pipeline — triggers on new S3 files, manages tasks and DAGs     |
 | **Pandas**                                        | Core data processing and transformation library                                      |
-| **SQLAlchemy**                                    | ORM and SQL query construction (used with PostgreSQL)                                |
 | **Psycopg2**                                      | PostgreSQL driver for Python                                                         |
-| **Requests**                                      | Lightweight HTTP client used in retries or notifications                             |
-| **BeautifulSoup4**                                | Parses and cleans embedded HTML content in auction data                              |
 | **Selenium** & **WebDriver Manager**              | (Used for scraping during re-scrape flow) — Automates browser tasks                  |
 | **[uv](https://github.com/astral-sh/uv)**         | Fast Python package installer and runner, used in development & automation workflows |
 
