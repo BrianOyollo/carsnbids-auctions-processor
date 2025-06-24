@@ -67,7 +67,6 @@ def setup_postgres_connection(
         db_host: str, 
         db_port: int, 
         db_name: str,
-        env_file_path: str = '.env'
     )->str:
     """
     Creates a PostgreSQL Airflow connection URI and appends it to a .env file.
