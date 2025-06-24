@@ -8,8 +8,6 @@
 
 This component builds upon the [`carsnbids_scraper`](https://github.com/BrianOyollo/carsnbids-scraper) project, which collects raw auction data and stores it in Amazon S3.
 
-
-
 ## Project Goals
 
 - Transform raw, semi-structured JSON auction files into structured tabular data
@@ -19,8 +17,6 @@ This component builds upon the [`carsnbids_scraper`](https://github.com/BrianOyo
 - Load cleaned data into a cloud-based PostgreSQL data warehouse
 
 - Automate the entire process using Apache Airflow
-
-
 
 ## Tools & Technologies
 
@@ -33,8 +29,6 @@ This project uses the following tools to orchestrate, transform, and load auctio
 | **Psycopg2**                                      | PostgreSQL driver for Python                                                         |
 | **Selenium** & **WebDriver Manager**              | (Used for scraping during re-scrape flow) — Automates browser tasks                  |
 | **[uv](https://github.com/astral-sh/uv)**         | Fast Python package installer and runner, used in development & automation workflows |
-
-
 
 ## How It Works
 
@@ -91,10 +85,7 @@ This project uses the following tools to orchestrate, transform, and load auctio
 ├── main.py                             # uv file (ignore)
 ├── .python-version                     # Python version managed by uv
 ├── uv.lock                             # uv dependency lock file
-
 ```
-
-
 
 ## Installation
 
@@ -137,6 +128,11 @@ source .venv/bin/activate
  # example
  airflow db migrate
  
+ # modify ~/airflow/airflow.cfg
+ # commment out the existing auth manager line 
+ # add the following below the line
+ 
+
  airflow users create \
     --username admin \
     --firstname Peter \
@@ -226,5 +222,3 @@ It is **not affiliated with carsandbids.com.**
 ## Contact
 
 Have questions or feedback? Reach out at oyollobrian@gmail.com
-
-
