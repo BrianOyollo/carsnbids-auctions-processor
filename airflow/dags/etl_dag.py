@@ -45,15 +45,15 @@ default_args = {
     'depends_on_past': False,
     'email': ['brian@example.com'],
     'email_on_failure': True,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=2),
-    'execution_timeout': timedelta(minutes=9),
+    'email_on_retry': True,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=10),
+    'execution_timeout': timedelta(hours=2),
     'start_date': datetime(2024, 5, 1),
 }
 
 @dag(
-    schedule='* * * * *',
+    schedule='* * * * *', # update this
     catchup=False,
     tags=["cars&bids"],
     default_args = default_args
@@ -65,8 +65,8 @@ def carsnbids_dag():
         aws_conn_id = 'aws_default',
         bucket_name = raw_auctions_bucket,
         bucket_key = main_auction_file,
-        poke_interval = 30,
-        timeout = 60*2,
+        poke_interval = 60*3,
+        timeout = 60*60*4,
     )
     @task_group(group_id = "transform_rescrape")
     def transform_rescrape_group(
@@ -107,7 +107,7 @@ def carsnbids_dag():
             
             return {"processed_auction_keys": processed_auction_keys, "rescrape_urls": rescrape_urls}
     
-        @task(task_id="rescrape_task", execution_timeout=timedelta(minutes=10))
+        @task(task_id="rescrape_task")
         def rescrape_auction_urls(s3_client, rescraped_auctions_bucket:str, rescrape_object_key:str, transform_results:dict):
             rescrape_urls = transform_results.get('rescrape_urls')
             if not rescrape_urls:
@@ -116,7 +116,7 @@ def carsnbids_dag():
             driver = setup.driver_setup()
             rescrapred_auction_data = []
             
-            for url in rescrape_urls[:2]:
+            for url in rescrape_urls:
                 auction_data = scraper.scrape_auction_data(driver, url)
                 rescrapred_auction_data.append(auction_data)
 
@@ -192,11 +192,9 @@ def carsnbids_dag():
 
                 # create a df
                 df = pd.DataFrame(auction_data)
-                print(df['auction_date'].head(5))
 
                 # load to staging table
                 inserted_rows = load_module.load_to_postgres(df, conn, cursor)
-                print(f"Inserted {inserted_rows} rows into the staging table.")
                 return inserted_rows
             
             except Exception as e:

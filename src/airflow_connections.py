@@ -56,7 +56,7 @@ def setup_aws_connection(connection_name:str, aws_access_key:str,aws_secret_acce
     # write connection uri to .env
     with open(env_file_path, 'a') as f:
         f.write(f"{env_key}={conn_uri}\n")
-        print(f"{env_key} added to .env")
+        print(f"{env_key} added to {env_file_path}")
 
 
 

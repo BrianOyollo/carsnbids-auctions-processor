@@ -69,8 +69,6 @@ def load_to_s3(s3_client, bucket, df)->list:
         except botocore.exceptions.ClientError as e:
             return False
         
-    print("when df is first received")
-    print(df['auction_date'].head(5))
 
     # group the df by auction_saving_date
     df['auction_saving_date'] = df['auction_date'].dt.date
@@ -81,16 +79,11 @@ def load_to_s3(s3_client, bucket, df)->list:
         ndjson_str = group.to_json(orient='records', lines=True)
         new_data = [json.loads(line) for line in ndjson_str.splitlines()]
 
-        print("new data before combining:")
-        print(new_data)
 
         # check if key exists in bucket
         if check_object_exists(bucket, group_object_key):
             response = s3_client.get_object(Bucket=bucket, Key=group_object_key)
             existing_data = [json.loads(line) for line in response['Body'].read().decode('utf-8').splitlines()]
-
-            print("existing data before combining:")
-            print(existing_data)
 
             # combine existing and new auction data
             combined_data = existing_data + new_data
@@ -99,13 +92,7 @@ def load_to_s3(s3_client, bucket, df)->list:
             # sort data by auction_date in desc order
             # drop duplicates based on auction_id
             df = pd.DataFrame(combined_data)
-            print("before enforcing column types:")
-            print(df['auction_date'].head(5))
-
-            df = enforce_column_types(df)
-            print("after enforcing column types:")
-            print(df['auction_date'].head(5))
-            
+            df = enforce_column_types(df) 
             df = df.drop(columns=['auction_saving_date']).sort_values('auction_date', ascending=False).reset_index(drop=True)
             df = df.drop_duplicates('auction_id', keep='first')
 

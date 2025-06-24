@@ -2,9 +2,10 @@
 
 SESSION_NAME="airflow"
 VENV_PATH="../.venv"
+uv=/home/ubuntu/.local/bin/uv # uv installation loc
 
 # Activate virtual environment command
-ACTIVATE_CMD="source $VENV_PATH/bin/activate"
+ACTIVATE_CMD="$uv source $VENV_PATH/bin/activate"
 
 # Create a new tmux session detached
 tmux new-session -d -s $SESSION_NAME
